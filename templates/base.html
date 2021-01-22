@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">       
+        <!-- External libraries -->
+        <link  href="/static/libs/icons-fontawesome/css/all.css" rel="stylesheet" type="text/css" >
+        <link  href="/static/libs/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" >
+        <link rel="stylesheet" href="../static/styles/base.css">
+        <link rel="stylesheet" href="../static/styles/login.css">
+        <script src="/static/libs/jquery-3.3.1.min.js"></script>
+        <script src="/static/libs/popper.min.js"></script>
+        <script src="/static/libs/bootstrap/bootstrap.min.js"></script>
+        
+        <!-- internal libraries -->
+        <link  href="/static/styles/global.css?{{ config.files_sig }}" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="/static/js/page_index.js?{{ config.files_sig }}" ></script>
+		<script type="text/javascript" src="/static/js/page_setup.js?{{ config.files_sig }}" ></script>
+        <script type="text/javascript" src="/static/js/page_index_detail.js?{{ config.files_sig }}" ></script>
+        <script type="text/javascript" src="/static/js/page_param.js?{{ config.files_sig }}" ></script>
+        <script type="text/javascript" src="/static/js/page_result.js?{{ config.files_sig }}" ></script>
+        <script type="text/javascript" src="/static/js/page_result_detail.js?{{ config.files_sig }}" ></script>
+        <script type="text/javascript" src="/static/js/page_results_group_detail.js?{{ config.files_sig }}" ></script>
+        <script type="text/javascript" src="/static/js/page_history.js?{{ config.files_sig }}" ></script>
+        <script type="text/javascript" src="/static/js/global.js?{{ config.files_sig }}" ></script>
+       <script>
+
+		function user_confirmation(){
+			if (confirm('Are you sure you want to go back to index ? \nIf you do so, you will have to select a study case again.')) {
+				window.location="index.html";
+			} else {
+				// Do nothing!
+			}
+		}
+		</script>
+        <title>Anagreen Dashboard</title>
+
+        <!-- INTEGRATE -->
+        {{ resources|safe }}
+
+        {% block inner_head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="appheader" class="jumbotron jumbotron-fluid" style="padding: 10px;">
+            <!--h1><a href="/" id="logo"><span>Ana</span>green</a></h1>
+            <p>ANAlyse Globale de REcupération d'ENergie</p-->
+            <a href="index.html" id="logo"><img src="../static/logoblanc.png" alt="Logo anagreen"></a>
+            <nav id="navbar">
+                <a href="index.html">Accueil</a>
+                <a href="#">Mon Espace </a>
+                <a href="#">Paramètres</a>
+            </nav>
+        </div>
+        <!-- User menu -->
+        <!-- <div class="dropdown" id="user_info">
+            <button type="button" class="white_button btn" id="button_user_info" data-toggle="dropdown">
+                <i class="fas fa-chevron-right" id="user_menu_syb"></i>
+               <text>Nicolas Paris</text> 
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Profil</a></li>
+                <li><a class="dropdown-item" href="#">Paramètres de l'algorithme</a></li>
+                <li><a class="dropdown-item" href="#">Uploader des données</a></li>
+                <li><a class="dropdown-item" href="#">Télécharger des données</a></li>
+            </ul>
+        </div> -->
+
+        <!-- Navigation bar -->
+		<input type="button" class="info_logo" value="Reset Database" id="reset_button" style="position:absolute;right:10px;" title="reset the database\tWarning, it will clear all history and current simulation">
+					<div id="help_flux" class="div_hover" style="top:325px; margin-left: 7%; margin-right:7%;">
+					<div style="padding-right:10px;">
+						<p><strong>Flux</strong>
+							<ul>
+								<li>To add one, click <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEMEiERGWPELgAAA4RJREFUWMO1lr1uG1cQhb9ztdRSP7AF1QxgwKlcuZSqRC9gWUUUINWqTh5AnaFOnVPEteQmRuhCURqWsSqqc9IolREXdEvQBElxtdw7KURSFEVKu4w8wAKLxdw9Z+bMnRmZGXfZ29//II8th4WwGVNyIoQLYB5vxA9Caq04iUd9A+7ZlsNC2I7TdSd2hZXMJKlnTqp9jtl/GBaqoyQ0noFKpUIzBicYYc+DEFpxkglc4oVJa5gvDn8v1xV2irG3FM4NSVwjUKlUaMcpJhCGmSEJQ6QGD8M5WnHCd8+f3QCXpPLx8WNwv0j6Bm9FMK7FJ3WBE+R/2t7c/GBmFvSBrzRTCsyTDjXrxUgEMtpxynJYmJoBJ4VAybwVARgvL7Oik0okCodnKpVKX7P0leiVMb0VvbJT+upznK4vh0GIeQwwQStJkHQD3MwsCALTJRG7Qrdrj5m/djgYaIa0hlkRdJk26XEgC9txurccBtVW3IudBImmZuACUP+ZlIDBt9FKcubYNTcAH/X0RYM1E7utJPlqe+uZzPxUcEkiSS4sTT95n15Mud0xWC0o2PAWOCdK3KYZlFxfM+tHOcnMzNr1es18ug+cgsVjP4yBU/Ppfrter1m/+l0+zYygML1xRVHU7TSb1cSzBzoBzszsH+AMdJJ49jrNZjWKou6wBnwOzcyndBpNbuueURR1Dw8Pq35p9cc5p/Dy9Dypt7jXrtdGwQECS9NPhr6Gq6txUzNigE6zydLK6lTw12/KT4FGFEUfJX2YJNONq5tVs4ODA7sD/DnwJ/BoADZuE3tHFs12dna6d4C/BI6AlbyzI8ii2TTw12/KK33gb2cdXsNZoAntbZC2SeO4c9592k/5eNQbiwvFd1kJuFGwLJr1wSPg/SwpvyFBHufOeXcFeAlE97U/uCxOY+P3b+Bn4B3Q+L8EdJfD4a+/AbC4UBzPxiPg3wlHZquB28Cn2IuR9x3gr3uV4DbwfvSDOvi4uFA8BDZmIRHkjHpS9Ht9iRqd8+5G3g05mAGcQbsdiX5QJ428G7Kygo8XYdb1/K4NWVmjzkNge2sz84bs+ELmpDDLtqWsNZBXgvmw8CTtpWVMT7x5YWBjLARnwZfKQNYN2U2LPvrh+5nBt7c2M2/It9bArCTKR8eZN+SJ13AScPnoODeRdqNenH+wul5w2gUr2WUjMFAt8bZ/0axX/wNnv4H8vTFb1QAAAABJRU5ErkJggg=="> and click on the map</li>
+								<li>to move it, drag and drop it from the map while the button is active</li>
+								<li>to change details, right-click on it in the list on the left</li>
+								<li>to remove it, click on the recycle bin or the button in the right click box</li>
+							</ul>
+						</p>
+					</div>
+				</div>
+		</input>
+		<div class="content">
+           <!-- <div class="nav_base">
+				
+                <nav class="navbar navbar-expand-lg navbar-light" id="menu">
+                
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+					
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+						    <li class="nav-item {{'active' if page_id==0}}" onclick="user_confirmation();">
+                                <a class="nav-link" >0. Study case choice</a>
+								<div class="menu_picture" id="menu_index"  ></div>
+							</li>
+                            <li class="nav-item {{'active' if page_id==1}}" >
+                                <a class="nav-link" href="setup.html">1. Flux setup</a>
+								<div class="menu_picture" id="menu_flux"  onclick="window.location = 'setup.html'"></div>
+							</li>
+                            <li class="nav-item {{'active' if page_id==2}}">
+                                <a class="nav-link" href="parametrization.html">2. Parametrization</a>
+								<div class="menu_picture" id="menu_param" onclick="window.location = 'parametrization.html'"></div>
+						   </li>
+                            <li class="nav-item {{'active' if page_id==3}}">
+                                {% if config.status!=0 %}
+                                    <a class="nav-link" href="results.html"> 3. Results</a>
+                                {% else %}
+                                    <span class="nav-link"> 3. Results</span>
+                                {% endif %}
+                                <div class="menu_picture" id="menu_results" onclick="window.location = 'results.html'"></div>
+                            </li>
+							{% if page_id==1 %}
+							<img src="/static/checked.png" id="choice_ok_logo" class="logo_checked">
+                            {% elif page_id==2 %}
+							<img src="/static/checked.png" id="choice_ok_logo" class="logo_checked">
+                            <img src="/static/checked.png" id="setup_ok_logo" class="logo_checked">
+							{% elif page_id==3 %}
+							<img src="/static/checked.png" id="choice_ok_logo" class="logo_checked">
+							<img src="/static/checked.png" id="setup_ok_logo" class="logo_checked">
+							<img src="/static/checked.png" id="param_ok_logo" class="logo_checked">
+							{% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div> -->
+			
+			<div class="nav-item history_btn {{'active' if page_id==4}}" onclick="window.location = 'history.html'">
+				<div style="height:50px; line-height:50px;">Historique</div>
+			</div>
+            
+            {% block content %}
+
+            {% endblock %}
+        </div>
+        <!--<div style="text-align:center">Anagreen - Altran - 2018</div>-->
+        <script>
+            $(document).ready(function(){
+                $(".dropdown").on("hide.bs.dropdown", function(){
+                    $("#user_menu_syb").addClass('fa-chevron-right').removeClass('fa-chevron-down');
+                });
+                $(".dropdown").on("show.bs.dropdown", function(){
+                    $("#user_menu_syb").addClass('fa-chevron-down').removeClass('fa-chevron-right');
+                });
+            });
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+

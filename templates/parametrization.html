@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block inner_head %}
+    {{ script_all_models|safe }}
+{% endblock %}
+
+{% block content %}
+
+<!-- NO NOT TOUCH this hidden field, it let me transfert data to javascript, and don't add |safe-->
+<input type="hidden" id="json_data_params" value="">
+
+<form action="{{ url_for('results_page.results_page') }}" method="post" novalidate class="params_1rows">
+    {{ form.hidden_tag() }}
+    {% if form.errors %}
+        <ul class="errors">
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                    <li>{{ form[field_name].label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="card bg-light tabParam" id="fond_param">
+        <!--div class="card-header">Solution optimization parameters</div-->
+        <div class="container" style="padding: 10px">
+            <div class="row">
+                <div class="col-md-4 bordure"><h4 class="paramtitle titreTab">KPI</h4></div>
+                <div class="col-md-5 bordure"><h4 class="paramtitle titreTab">Limites</h4></div>
+                <div class="col-md-3 bordure">
+					<h4 class="paramtitle titreTab">
+						Poid 					
+						<div id="help_flux" class="div_hover">
+							<div style="padding-right:10px;">
+								<p><strong>Add description</strong>
+									<ul>
+										<li>There is no description for the moment</li>
+										<li>Placeholder</li>
+										<li>Placeholder</li>
+										<li>Placeholder</li>
+									</ul>
+								</p>
+							</div>
+						</div>
+					</h4>
+					
+				</div>
+            </div>
+			<div class="row">
+                <div class="col-md-4"><div class="paramcategory"></div></div>
+                <div class="col-md-5">
+                    <div class="row" >
+                        <div class="col-md-5">
+                            <p>Min</p>
+
+                        </div>
+                        <div class="col-md-5">
+                            <p>Max</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+			{% for param_display_name, param_prog_name in parameters_names %}
+            <hr>
+			<div class="row">
+                <div class="col-md-4 bordure"><div class="paramcategory">{{ parameters_disp_units[param_prog_name] }}</div></div>
+                <div class="col-md-5 bordure fondBlanc">
+                    <div class="row">
+                        <div class="col-md-5 insidegreen">
+          
+                            {{ param_fields["min_input_" + param_prog_name]() }}
+                            {% for error in param_fields["min_input_" + param_prog_name].errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-5 insidegreen" >
+                   
+                            {{ param_fields["max_input_" + param_prog_name]() }}
+                            {% for error in param_fields["max_input_" + param_prog_name].errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <!--p>Weight:</p-->
+                    {{ param_fields["weight_input_" + param_prog_name](type="range", min=1, max=5) }}
+                    {% for error in param_fields["weight_input_" + param_prog_name].errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container endessous" style="padding-left: 20px; padding-right: 20px;">
+		<div class="row">
+			<div class="col-md-4 card bg-light paramsalgo_1rows otherparam" id="">
+				<!--div class="card-header">Other parameters</div-->
+				
+				<div class="container">
+				<p class="otherparamheader">Autres paramètres</p>
+				<hr>
+					<p>Tpinch:  {{ form.param_tpinch }} °C
+					{% for error in form.param_tpinch.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}</p>
+				   
+				</div>
+			</div>
+			<div class="col-md-5 card bg-light paramsalgo_1rows otherparam">
+				<!--div class="card-header">Algorithm optimization parameters</div-->
+				<div class="container">
+				<p class="otherparamheader">Type d'Algorithme</p>
+					{% for subfield in form.search_method %}
+						<div>
+							<td>{{ subfield }}</td>
+							<td>{{ subfield.label }}</td>
+						</div>
+					{% endfor %}
+					{% for error in form.search_method.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</div>
+			</div>
+			
+			<div class="button_bottom col-md-3">
+				{{ form.submit(role="button", class="bottom_button btn btn-success btn-lg btn-block lancerSearch") }}
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}

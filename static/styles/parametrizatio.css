@@ -1,0 +1,11 @@
+.paramtitle{
+	font-size:13pt!important;
+	font-family: Arial;
+}
+.info_logo:hover + .div_hover {
+	display: block;
+}
+/*black bold titles*/
+.otherparamheader{
+	font-weight:bold!important;
+}

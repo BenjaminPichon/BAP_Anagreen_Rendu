@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<input type="hidden" id="json_data_result" value="{{json_data}}">
+<input type="hidden" id="simulation_status" value="{{simulation_status}}">
+    
+    
+<div id="modal_wait" class="modal_grey">
+    <div class="modal_content">
+        <h2>Simulation en cours</h2>
+        <p>Cette étape peut durer quelques minutes...</p>
+        <div id="logo_loading"></div>
+        <!--<progress id="simulation_progress" max="100" value="0"></progress>
+        <p><span id="simulation_progress_txt">0</span>%</p>-->
+    </div>
+</div>
+
+<div class="card bg-light params_1rows resultFond">
+    <div class="container" id="results_container">
+        <center>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" class="paramtitle">Position</th>
+                        <th scope="col" class="paramtitle">% du MER</th>
+                        <th scope="col" class="paramtitle">Puissance échangée (kW)</th>
+                        <th scope="col" class="paramtitle">CAPEX (€)</th>
+                        <th scope="col" class="paramtitle">OPEX (€ / an)</th>
+                        <th scope="col" class="paramtitle">ROI (ans)</th>
+                        <th scope="col" class="paramtitle">CO2 évités (kt eq CO2)</th>
+                        <th scope="col" class="paramtitle">Pertinence</th>
+                        <th scope="col" class="paramtitle">Details
+						<!--<span class="info_logo" ><img src="/static/info.png" style="height:30px; padding-left:10px;"></span> -->	
+						<div id="help_flux" class="div_hover">
+							<div style="padding-right:10px;">
+								<p><strong>Add description</strong>
+									<ul>
+										<li>There is no description for the moment</li>
+										<li>Placeholder</li>
+										<li>Placeholder</li>
+										<li>Placeholder</li>
+									</ul>
+								</p>
+							</div>
+						</div>
+						</th>
+                    </tr>
+                </thead>
+                {% for item in tl %}
+                <tr  class="result">
+                    <th scope="row">{{item.rank}}</td>
+                    <td class="c1"><div class="result_digit">{{item.PERCENTofMER}}</div></td>
+                    <td class="c2"><div class="result_digit">{{item.savedEnergy}}</div></td>
+                    <td class="c4"><div class="result_digit">{{item.capex}}</div></td>
+                    <td class="c3"><div class="result_digit">{{item.opex}}</div></td>
+                    <td class="c5"><div class="result_digit">{{item.roi}}</div></td>
+                    <td class="c6"><div class="result_digit">{{item.CO2Savings}}</div></td>
+                    <td class="c7"><div class="result_digit">{{item.score}}</div></td>
+                    <td class="c8"><input type="button" class="solution_buton" data-goid="{{item.id}}" value="Detail"></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div>
+                <input type="submit" value="Télécharger" id="download">
+            </div>
+        </center>
+    </div>
+</div>
+{% endblock %}

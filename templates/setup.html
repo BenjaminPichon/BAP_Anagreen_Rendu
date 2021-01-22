@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block inner_head %}
+    {{ script|safe }}
+{% endblock %}
+
+{% block content %}
+
+<div id="case_header_container">
+	<div><text>Nom : 		</text>{{case_informations.case_name}}</div>
+	<div><text>Entreprise : </text>{{case_informations.case_company}}</div>
+</div>
+
+<button type="input" id="etape1_next_step_button" class="top_button btn btn-lg btn-success next-btn btn-block" disabled>Suivant</button>
+
+<div id="modal_rename_zone" class="modal_grey">
+    <div class="modal_content">
+        <button type="button" class="modal_close_button" title="Keyboard shortcut : Esc"><i class="fas fa-times"></i></button>
+        <h2>Rename zone</h2>
+        <input type="hidden" id="modal_zone_id">
+        <p>Name: <input type="text" id="modal_zone_name"></p>
+        <p><input type="button" id="modal_zone_submit" value="Save">
+        - <input type="button" id="modal_zone_remove" value="Remove"></p>
+    </div>
+</div>
+
+<div id="modal_edit_flux" class="modal_grey">
+    <div class="modal_content modal_content_flux" id="ajoutFlux">
+        <button type="button" class="modal_close_button" title="Keyboard shortcut : Esc"><i class="fas fa-times"></i></button>
+        <h2 style="padding-bottom: 15px;">Modifier les flux</h2>
+        <input type="hidden" id="modal_flux_id">
+        
+        <table>
+			<tr><td>Name: </td><td><input type="text" id="modal_flux_name" class="setupInput"></td></tr>
+			<tr><td>Type: </td><td><select id="modal_flux_hotcold" class="setupInput">
+			<option value="hot">hot</option>
+			<option value="cold">cold</option>
+			</select></td></tr>
+			
+			<tr><td>Media: </td><td><input type="text" id="modal_flux_media" class="setupInput" placeholder="ex: water, steel, air..."></td></tr>
+			<tr><td>class: </td><td><input type="text" id="modal_flux_fclass" class="setupInput" placeholder="1, 2 or 3"></td></tr>
+			<tr><td>tempIn: </td><td><input type="text" id="modal_flux_tempIn" class="setupInput" disabled></td></tr>
+			<tr><td>tempOut: </td><td><input type="text" id="modal_flux_tempOut" class="setupInput" disabled></td></tr>
+			<tr><td></td><td></td></tr>
+        </table>
+        
+		<div id="fluxButton">
+			<button type="button" style="border-radius: none !important;" id="modal_flux_remove" class="buttonFlux">Supprimer</button>
+			<input type="button" id="modal_flux_editdetaildata" value="Données avancées" class="buttonFlux"></p>
+			<div style="text-align: center;">
+				<input type="button" id="modal_flux_submit" value="Valider" class="buttonFlux2">
+			</div>
+		</div>
+    </div>
+</div>
+
+<div id="modal_edit_flux_detaildata" class="modal_grey">
+    <div class="modal_content modal_content_fluxdata">
+        <button type="button" class="modal_close_button" title="Keyboard shortcut : Esc"><i class="fas fa-times"></i></button>
+        <h2>Edit flux detail data</h2>
+        <p>to add a new record/line, set the id field to "-1"</p>
+        <input type="hidden" id="modal_flux_id_detaildata">
+        <textarea id="textare_flux_detaildata" style="width:600px;height:250px;">
+        </textarea>
+
+        <p><input type="button" id="modal_fluxdata_submit" value="Save">
+        - <input type="button" id="modal_fluxdata_cancel" value="Cancel"></p>
+    </div>
+</div>
+
+
+<!-- NO NOT TOUCH this hidden field, it let me transfert data to javascript, and don't add |safe-->
+<input type="hidden" id="json_data_index" value="{{ json_data }}">
+
+<div class="container main_content" id='setup'>
+	<div class="row study_case_container" style="padding-bottom: 10px;">
+		<!-- Left area with hot/cold/zone tables -->
+		<div class="col-5" id="list_of_flux">
+			<div class="card-header index_header" id="headerTabSetup">
+				Liste des flux 
+				<span class="info_logo" ><img src="/static/info.png" style="height:20px; padding-left:10px;"></span>		
+				<div id="help_flux" class="div_hover">
+					<div style="padding-right:10px;">
+						<p><strong>Flux</strong>
+							<ul>
+								<li>To add one, click <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEMEiERGWPELgAAA4RJREFUWMO1lr1uG1cQhb9ztdRSP7AF1QxgwKlcuZSqRC9gWUUUINWqTh5AnaFOnVPEteQmRuhCURqWsSqqc9IolREXdEvQBElxtdw7KURSFEVKu4w8wAKLxdw9Z+bMnRmZGXfZ29//II8th4WwGVNyIoQLYB5vxA9Caq04iUd9A+7ZlsNC2I7TdSd2hZXMJKlnTqp9jtl/GBaqoyQ0noFKpUIzBicYYc+DEFpxkglc4oVJa5gvDn8v1xV2irG3FM4NSVwjUKlUaMcpJhCGmSEJQ6QGD8M5WnHCd8+f3QCXpPLx8WNwv0j6Bm9FMK7FJ3WBE+R/2t7c/GBmFvSBrzRTCsyTDjXrxUgEMtpxynJYmJoBJ4VAybwVARgvL7Oik0okCodnKpVKX7P0leiVMb0VvbJT+upznK4vh0GIeQwwQStJkHQD3MwsCALTJRG7Qrdrj5m/djgYaIa0hlkRdJk26XEgC9txurccBtVW3IudBImmZuACUP+ZlIDBt9FKcubYNTcAH/X0RYM1E7utJPlqe+uZzPxUcEkiSS4sTT95n15Mud0xWC0o2PAWOCdK3KYZlFxfM+tHOcnMzNr1es18ug+cgsVjP4yBU/Ppfrter1m/+l0+zYygML1xRVHU7TSb1cSzBzoBzszsH+AMdJJ49jrNZjWKou6wBnwOzcyndBpNbuueURR1Dw8Pq35p9cc5p/Dy9Dypt7jXrtdGwQECS9NPhr6Gq6txUzNigE6zydLK6lTw12/KT4FGFEUfJX2YJNONq5tVs4ODA7sD/DnwJ/BoADZuE3tHFs12dna6d4C/BI6AlbyzI8ii2TTw12/KK33gb2cdXsNZoAntbZC2SeO4c9592k/5eNQbiwvFd1kJuFGwLJr1wSPg/SwpvyFBHufOeXcFeAlE97U/uCxOY+P3b+Bn4B3Q+L8EdJfD4a+/AbC4UBzPxiPg3wlHZquB28Cn2IuR9x3gr3uV4DbwfvSDOvi4uFA8BDZmIRHkjHpS9Ht9iRqd8+5G3g05mAGcQbsdiX5QJ428G7Kygo8XYdb1/K4NWVmjzkNge2sz84bs+ELmpDDLtqWsNZBXgvmw8CTtpWVMT7x5YWBjLARnwZfKQNYN2U2LPvrh+5nBt7c2M2/It9bArCTKR8eZN+SJ13AScPnoODeRdqNenH+wul5w2gUr2WUjMFAt8bZ/0axX/wNnv4H8vTFb1QAAAABJRU5ErkJggg=="> and click on the map</li>
+								<li>to move it, drag and drop it from the map while the button is active</li>
+								<li>to change details, right-click on it in the list on the left</li>
+								<li>to remove it, click on the recycle bin or the button in the right click box</li>
+							</ul>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="card-body index_body" id="list_flux">
+				<div id="container_filter">
+					<div class="search_tool">
+						<label for="word_filter"><i for="word_filter" class="fas fa-search index_icons"></i></label>
+						<input id="word_filter" class="search_index" type="search" onkeyup="search_flux_list()" placeholder="Rechercher" disabled> 	
+					</div>
+					<div class="search_tool">
+						<label for="fclass_filter_sk_input"><i class="fas fa-filter index_icons"></i></label>
+						<select id="fclass_filter" multiple title="Filtre" class="search_index" disabled>
+							<option value="1"> primary</option>
+							<option value="2"> secondary</option>
+							<option value="3"> tertiary</option>
+						</select> 
+					</div>
+				</div>
+				<div id="left_flux_zone_tables">
+					<table id="table_flux" class="stripped_table">
+						<thead>
+						</thead>
+						<tbody></tbody>
+					</table>
+					<p>
+						<input type="button" value="Unselect all" id="button_deselect_all" disabled>
+					</p>
+					<div id="trash_flux">
+						<table id="table_trash_flux" class="stripped_table">
+								<tr><th colspan="2"><i class="fas fa-trash-alt"></i> Trashed flux</th></tr>
+								<tr><th colspan="2"><input type="button" value="Empty trash" id="button_empty_trash" disabled> <input type="button" value="Restore selected" id="button_restore_selected" disabled></th></tr>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-7">
+			<div style="height: 100%">
+				{{ div_flux_map |safe }}
+			</div>	
+		</div>
+	</div>
+</div>
+
+{% endblock %}

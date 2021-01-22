@@ -1,0 +1,97 @@
+
+/*header de tableaux*/
+.paramtitle{
+	font-size:13pt!important;
+	font-family: Gotham;
+
+}
+#fond_param .table-striped td, 
+#fond_param .table-striped th,
+#fond_param .table-striped thead,
+#fond_param td,
+#fond_param th,
+#fond_param thead {
+	border: 0px solid transparent;
+}
+/*param page*/
+#fond_param, .details_box{
+	width: 100%!important;
+	border: 0px;
+}
+
+#fond_param, .params_1rows{
+	margin-top: 30px;
+	width: 100%!important;
+	border: 0px;
+}
+/*header de tableaux*/
+.paramtitle{
+	font-size:13pt!important;
+	font-family: Arial;
+}
+.radio input[type=radio]{
+	display : block;
+}
+.container-button_bottom{
+	position: relative;	
+}
+#add-case-btn-text {
+	margin-left: 40px;
+}
+
+.imgPreview {
+	position:relative;
+	max-height:95%;
+	max-width:100%;
+	margin-left: auto;
+    margin-right: auto;
+}
+.modal-grey {
+    position:fixed;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    background-color:#efefef5e;
+	z-index:1;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+.model_content_new_case{
+	width: 400px;
+	height: 300px;
+	background-color: #efefef;
+	border-radius: 4px;
+	text-align: left;;
+	padding: 20px;
+}
+
+.model_content_new_case form {
+	margin-right: 30px;
+	margin-left: 30px;
+	margin-top: 30px;
+}
+
+.model_content_new_case h4 {
+	text-align: center;
+}
+
+.model_content_new_case input[type=text] {
+	width: 100%;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	border: 0;
+	padding: 5px;
+	padding-left: 10px;
+}
+
+.model_content_new_case input[type=submit] {
+	margin-top: 15px;
+	min-width: 150px;
+}
+.submit-add-case-button {
+	text-align: center;
+	height: 100%;
+
+}

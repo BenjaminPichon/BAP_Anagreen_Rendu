@@ -1,0 +1,38 @@
+#flux_selector {
+    grid-area: f;
+    align-self: center;
+    text-align:center;
+	margin-bottom:20px;
+	left: 45%;
+	top: 290px;
+	position: absolute;
+}
+#table_details tbody tr:nth-child(2n+1), #table_details tbody tr:nth-child(2n) {
+	background-color: #d6eea8 !important;
+}
+/* Tableau avec les lignes de couleures alternées */
+.stripped_table {
+    width: 100%;
+    margin-top:10px;
+}
+.stripped_table td {
+    padding: 4px;
+}
+.stripped_table td:first-child {
+    width: 1px;
+}
+.stripped_table tbody tr:nth-child(odd) {
+    background-color: #ffffff !important;
+}
+.stripped_table tbody tr:nth-child(even) {
+    background-color: #e5e5e5 !important;
+}
+.button_bottom {
+    grid-area: e;
+    /*margin:20px 0 20px 0;*/
+	padding-top:10px;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;	
+}

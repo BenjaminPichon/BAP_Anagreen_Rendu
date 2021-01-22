@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block inner_head %}
+    {{ script|safe }}
+{% endblock %}
+
+{% block content %}
+    
+
+
+<!-- NO NOT TOUCH this hidden field, it let me transfert data to javascript, and don't add |safe-->
+<input type="hidden" id="json_data_result_group_detail" value="{{json_data}}">
+
+<div  id="flux_selector">
+</div>
+
+
+<div class="card bg-light paramsalgo_1rows">
+
+<div class="container" style="padding: 30px">
+    <center>
+       Group_ID: {{ id }}
+    </center>
+</div>
+</div>
+
+
+
+<div class="button_bottom">
+    <input type="button" value="Back" id="etape3_back_button_detail" data-goid="{{ resultid }}" class="bottom_button btn btn-success btn-lg btn-block">
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,133 @@
+
+
+#appheader{
+	position:relative;
+	left:0px;
+	width:100%;
+	background-color: #333333!important;
+	height: 210px;
+	display: flex;
+	background-image: url('../flammepenche.png');
+	background-repeat: no-repeat;
+	background-position: right;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+#appheader a {
+	margin-left: 2%;
+}
+
+#logo {
+	margin-bottom: 25px;
+}
+
+#navbar {
+	display: flex;
+	width: 450px;
+	margin-right: 18%;
+}
+
+#navbar a {
+	font-size: 20px;
+	color: white;
+	margin: 0 20px;
+	font-family: Gotham;
+}
+
+#user_info {
+	position: absolute;
+	left: 5%;
+	top: 230px;	
+}
+
+button#button_user_info {
+	width: 200px;
+}
+
+button#button_user_info:focus {
+	box-shadow: none;
+}
+
+.white_button {
+	background-color: rgb(255, 255, 255);
+	border: 0;
+}
+
+.white_button:hover {
+	background-color: #efefef;
+	border: none;
+}
+
+#user_menu_syb {
+	position: absolute;
+	left: 20px;
+	top: 10px;
+}
+
+.info_logo:hover + .div_hover {
+	display: block;
+}
+/*checked logos that appear on the menu*/
+
+#reset_button{
+	border-style: none;
+	position: absolute;
+	left: 5%;
+	top: 300px;
+	border-radius: 5px;
+	background: url("../info.png") no-repeat;
+	background-color:#e6e6e6!important;
+	padding-right:30px;
+	background-position: 95%;
+	background-size: 15px 15px;
+	margin-right:5px;
+	font-family: GothamLight;
+}
+
+#reset_button:hover, 
+#button_deselect_all:hover, 
+#reset_results:hover, 
+#go_detail_button,
+.solution_buton:hover{
+	background-color:#c1c1c1!important;
+}
+
+.div_hover {
+	position: absolute;
+	display:none;
+	background-color:white;
+	border: solid 1px black;
+	-moz-box-shadow: 0 0 10px black;
+	-webkit-box-shadow: 0 0 10px black;
+	box-shadow: 0 0 10px black;
+	z-index:400;
+	font-size:13pt;
+	font-weight:normal;
+	text-align:center;
+	padding-top:10px;
+}
+
+.div_hover ul {
+	padding-right:10px;
+}
+
+.content {
+    display: grid;  
+    grid-template-columns: 17em 1fr 17em;
+    grid-template-areas: "a a a"
+                       "f f f"
+                       "k k k"
+                       "g g h"
+                       "b c d"
+                       "i i i"
+                       "j j j"
+                       "e e e";
+   width:100%;
+   margin:0 auto;
+   margin-top: 250px
+}
+
+.navbar-nav .nav-item {
+    margin-left:50px;
+}

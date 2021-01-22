@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block inner_head %}
+    {{ script|safe }}
+{% endblock %}
+
+{% block content %}
+    
+
+
+<!-- NO NOT TOUCH this hidden field, it let me transfert data to javascript, and don't add |safe-->
+<input type="hidden" id="json_data_result_detail" value="{{json_data}}">
+
+<div  id="flux_selector">
+</div>
+
+<div class="container main_content " >
+	<div class="card bg-light top_infos_1rows" id="fond_param" style="margin-top:10px;">
+		<!--div class="container" style="padding: 30px"-->
+			<center>
+				<table class="table table-striped">
+					<thead>
+						<tr></tr>
+							<th scope="col">Rank</th>
+							<th scope="col">Saved Energy</th>
+							<th scope="col">CAPEX</th>
+							<th scope="col">ROI</th>
+							<th scope="col">CO2Savings</th>
+							<th scope="col">Score</th>
+							<th scope="col">Linear meters</th>
+							<th scope="col">nomber of exchangers</th>
+						</tr>
+					</thead>
+					{% for item in current_solution %}
+					<tr>
+						<th scope="row">{{item.rank}}</td>
+						<td class="c2"> <div class="result_digit">{{item.savedEnergy}}</div></td>
+						<td class="c3"> <div class="result_digit">{{item.capex}}</div></td>
+						<td class="c4"> <div class="result_digit">{{item.roi}}</div></td>
+						<td class="c4"> <div class="result_digit">{{item.CO2Savings}}</div></td>
+						<td class="c4"> <div class="result_digit">{{item.score}}</div></td>
+						<td class="c4"> <div class="result_digit">{{ linear_meters }}</div></td>
+						<td class="c4"> <div class="result_digit">{{ qty_groups }}</div></td>
+					</tr>
+					{% endfor %}
+				</table>
+			</center>
+		<!--/div-->
+	</div>
+	<div class="row" style="padding-bottom: 10px;">
+		<!-- Left area with hot/cold/zone tables -->
+		<div class="col-2">
+			<div class="card-header index_header">
+				Groups List
+				<span class="info_logo" ><img src="/static/info.png" style="height:30px; padding-left:10px;"></span>	
+				<div id="help_flux" class="div_hover">
+					<div style="padding-right:10px;">
+						<p><strong>Groups</strong>
+						<p>Click on one group in the table to see its details (list of flux)</p>
+					</div>
+				</div>
+			</div>
+			<div class="card-body index_body" id="list_flux">
+			<br>
+				<input type="button" value="Unselect all" id="button_deselect_all">
+				
+				<table id="table_couples" class="stripped_table">
+					<thead>
+						<tr><th colspan="2">Couples</th></tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+
+		<!-- Center area with graph -->
+		<div class="col-7">
+			<!--div class="card-header index_header">RESULT Plant map</div-->
+			<div class="card-body index_body" id="results_details_map">
+
+				<center>
+					{{ div_flux_map |safe }}
+				</center>
+			</div>
+		</div>
+		<!-- Defail information area -->
+		<div class="col-3">
+			<div id="detail_area">
+			<div class="card-header index_header">Group details</div>
+			<div class="card-body index_body" id="flux_details">
+			
+				<table id="table_details_hot" class="stripped_table">
+				<thead>
+				<tr><th colspan="2">Hot flux</th></tr>
+				</thead>
+				<tbody>
+				</tbody>
+				</table>
+				
+				<table id="table_details_cold" class="stripped_table">
+				<thead>
+				<tr><th colspan="2">Cold flux</th></tr>
+				</thead>
+				<tbody>
+				</tbody>
+				</table>
+				
+				<table id="table_details_exchanger" class="stripped_table">
+				<thead>
+				<tr><th colspan="2">Exchanger</th></tr>
+				</thead>
+				<tbody>
+				</tbody>
+				</table>
+			</div>
+		</div>
+		
+
+		<div class="button_bottom" id="index_next_but">
+			<input type="button" value="Back" id="etape3_back_button" class="bottom_button btn btn-success btn-lg btn-block">
+		</div>
+	</div>
+
+
+</div>
+<div>
+	
+	{{ div_flux_diag |safe }}
+</div>
+
+<!-- CAPEX and OPEX details table -->
+<div class="container_opex_capex">
+	<table id="table_capex" class="table_opex_capex ">
+	<thead>
+	<tr><th colspan="2">CAPEX</th></tr>
+	</thead>
+	<tbody>
+	<tr class="table_opex_gras"><td>Dénomination</td><td>Coût</td></tr>
+	<tr><td>Echangeurs</td><td>{{current_solution[0].capex_ech}} €</td></tr>
+	<tr><td>Pompes</td><td>{{current_solution[0].capex_pompes}} €</td></tr>
+	<tr><td>Tuyauterie</td><td>{{current_solution[0].capex_tuyauterie}} €</td></tr>
+	<tr class="table_opex_gras table_border_bottom"><td>TOTAL</td><td>{{current_solution[0].capex}} €</td></tr>
+	<tr><td>Etude</td><td>{{current_solution[0].capex_etude}} €</td></tr>
+	<tr><td>Installation</td><td>{{current_solution[0].capex_install}} €</td></tr>
+	<tr><td>Réglage</td><td>{{current_solution[0].capex_reglage}} €</td></tr>
+	<tr><td>Administratif</td><td>{{current_solution[0].capex_admin}} €</td></tr>
+	</tbody>
+	</table>
+	<table id="table_opex" class="table_opex_capex ">
+	<thead>
+	<tr><th colspan="2">OPEX</th></tr>
+	</thead>
+	<tbody>
+	<tr class="table_opex_gras"><td>Dénomination</td><td>Coût</td></tr>
+	<tr><td>Pompes</td><td>{{current_solution[0].opex_pompes}} €</td></tr>
+	<tr><td>Utilités</td><td>{{current_solution[0].opex_utilites}} €</td></tr>
+	<tr><td>Maintenance</td><td>{{current_solution[0].opex_maint}} €</td></tr>
+	<tr><td>Entretien</td><td>{{current_solution[0].opex_entretien}} €</td></tr>
+	<tr class="table_opex_gras"><td>TOTAL</td><td>{{current_solution[0].opex}} €</td></tr>
+	</tbody>
+	</table>
+	<table id="table_pinch" class="table_pinch">
+	<thead>
+	<tr><th colspan="2">Résultats Pinch</th></tr>
+	</thead>
+	<tbody>
+	<tr><td>MER (kW)</td><td>{{current_solution[0].kpi_mer}}</td></tr>
+	<tr><td>Ecart avec le MER (%)</td><td>{{current_solution[0].kpi_prctMer}}</td></tr>
+	<tr><td>ER (kW)</td><td>{{current_solution[0].energieRequise}}</td></tr>
+	<tr><td>Puissance échangée (kW)</td><td>{{current_solution[0].kpi_puissEch}}</td></tr>
+	<tr><td>Energie échangée (MWh)</td><td>{{current_solution[0].kpi_enEch}}</td></tr>
+	<tr><td>Nombre d'échangeurs</td><td>{{current_solution[0].kpi_nbEch}}</td></tr>
+	<tr><td>Nombre d'utilités</td><td>{{current_solution[0].kpi_nbUti}}</td></tr>
+	</tbody>
+	</table>
+</div>
+
+<div>
+	<table id="table_exchangers" class="table_exchangers">
+		<thead>
+		<tr><th colspan="15">Détails par échangeur</th></tr>
+		<tr class="table_opex_gras"><th onclick="sortTable(0)">Numéro</th><th onclick="sortTable(1)">Flux chaud</th>
+			<th onclick="sortTable(2)">Flux froid</th><th onclick="sortTable(3)">Puissance échangée (kW)</th>
+			<th onclick="sortTable(4)">Type</th><th onclick="sortTable(5)">Surface (m<exp>2</exp>)</th><th onclick="sortTable(6)">Coût d'achat</th>
+			<th onclick="sortTable(7)">Longueur des tuyaux (m)</th><th onclick="sortTable(8)">CAPEX </th>
+			<th onclick="sortTable(9)">OPEX </th><th onclick="sortTable(10)">TRI (années) </th>
+			<th onclick="sortTable(11)">Valeur Actuelle Nette </th><th onclick="sortTable(12)">Indice de Profitabilité </th>
+			<th onclick="sortTable(13)">CO2 économisé (kt eq CO2)</th><th onclick="sortTable(14)">Economie totale</th></tr>
+		</thead>
+		<tbody>
+		<!-- <tr class="table_opex_gras"><td>Numéro</td><td>Flux chaud</td><td>Flux froid</td><td>Puissance échangée (kW)</td><td>Type</td><td>Coût d'achat</td>
+			<td>Longueur des tuyaux (m)</td><td>CAPEX </td><td>OPEX </td><td>Temps de Retour sur Investissement </td><td>Valeur Actuelle Nette </td>
+			<td>Indice de Profitabilité </td><td>CO2 économisé (kt eq CO2)</td><td>Economie totale</td></tr> -->
+
+		{% for i in current_solution[0].exchangers %} 
+		<tr>
+			{% for j in i %} 
+  				<td>{{j}}</td>
+			{%endfor%}
+		</tr>
+		{%endfor%} 
+		
+		</tbody>
+		</table>
+</div>
+
+
+
+<script>
+	// Base sur W3Schools
+	function sortTable(n) {
+	  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	  table = document.getElementById("table_exchangers");
+	  switching = true;
+	  // Set the sorting direction to ascending:
+	  dir = "asc";
+	  /* Make a loop that will continue until
+	  no switching has been done: */
+	  while (switching) {
+		// Start by saying: no switching is done:
+		switching = false;
+		rows = table.rows;
+		/* Loop through all table rows (except the
+		first, which contains table headers): */
+		for (i = 2; i < (rows.length - 1); i++) {
+		  // Start by saying there should be no switching:
+		  shouldSwitch = false;
+		  /* Get the two elements you want to compare,
+		  one from current row and one from the next: */
+		  x = rows[i].getElementsByTagName("TD")[n];
+		  y = rows[i + 1].getElementsByTagName("TD")[n];
+		  contentX = parseFloat(x.innerHTML.toLowerCase().replace(/ /g,""));
+		  contentY = parseFloat(y.innerHTML.toLowerCase().replace(/ /g,""));
+		  if(isNaN(contentX)){
+			  contentX = x.innerHTML.toLowerCase();
+			  contentY = y.innerHTML.toLowerCase();
+		  }
+		  /* Check if the two rows should switch place,
+		  based on the direction, asc or desc: */
+		  if (dir == "asc") {
+			if (contentX > contentY) {
+			  // If so, mark as a switch and break the loop:
+			  shouldSwitch = true;
+			  break;
+			}
+		  } else if (dir == "desc") {
+			if (contentX < contentY) {
+			  // If so, mark as a switch and break the loop:
+			  shouldSwitch = true;
+			  break;
+			}
+		  }
+		}
+		if (shouldSwitch) {
+		  /* If a switch has been marked, make the switch
+		  and mark that a switch has been done: */
+		  rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		  switching = true;
+		  // Each time a switch is done, increase this count by 1:
+		  switchcount ++;
+		} else {
+		  /* If no switching has been done AND the direction is "asc",
+		  set the direction to "desc" and run the while loop again. */
+		  if (switchcount == 0 && dir == "asc") {
+			dir = "desc";
+			switching = true;
+		  }
+		}
+	  }
+	}
+	</script>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+Plate-forme ANAGREEN
+********************
+
+Logiciels pr�requis�: 
+Python 3.8 install� par le support informatique avec les privil�ges admininstrateurs
+Lorsque vous demandez au support d�installer Python, demandez-leur �galement d�ajouter le dossier d�installation Python (qui doit �tre par d�faut quelque chose comme ��C:\Program Files\Python��) dans les variables d�environnements Python et Path
+
+********************************
+
+Installation�:
+
+Cloner le dossier depuis le d�p�t Git de la plate-forme Anagreen quelque part sur votre machine.
+Ouvrir ce dossier.
+Double-cliquez sur install.bat pour installer les biblioth�ques requises.
+
+Si cela �choue, ouvrez une invite de commande, placez l�invite de commande dans le dossier de la plateforme et entrez une par une les commandes suivantes�:
+
+python -m pip install --upgrade pip 
+pip install virtualenv 
+pip install virtualenvwrapper-win 
+mkvirtualenv virt-ihm-master 
+setprojectdir . 
+workon virt-ihm-master 
+pip install -r requirements.txt
+
+********************************
+
+Lancement de la plateforme�:
+
+Double-cliquez sur launch_browser_and_server.bat pour lancer le serveur et ouvrir une fen�tre de navigateur.
+
+Alternativement�:
+
+Ouvrir une invite de commande
+Taper les commandes suivantes�:
+
+workon virt-ihm-master
+python run.py
+
+Tout en gardant ouvert l�invite de commande, ouvrir un navigateur et aller � l�adresse http://127.0.0.1:50007/
+
+
+****************************
+
+Informations de connexion�:
+
+Pour le moment, les identifiants de connexion sont�:
+Identifiant�: admin
+Mot de passe�: anayellow
+

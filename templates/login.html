@@ -1,0 +1,108 @@
+
+
+{% block content %}
+<section id="pageLogin">
+    <div class="container">
+        <img src="../static/logoblanc.png" alt="Logo Anagreen">
+        <br>
+        <form action="" method="post" id="login">
+            <label for="username">Identifiant</label>
+            <input type="text" placeholder="Username" name="username" value="{{
+            request.form.username }}" class="inputConnexion">
+            <label for="password">Mot de passe</label>
+            <input type="password" placeholder="Password" name="password" value="{{
+            request.form.password }}" class="inputConnexion">
+            <label for="Login"></label>
+            <input class="log" type="submit" value="Connexion" id="go">
+        </form>
+        <p id="ou">ou</p>
+        <a href="#" id="inscrire">S'inscrire</a>
+        {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+        {% endif %}
+        </div>
+</section>
+
+<style>
+    @font-face {
+        font-family: 'Gotham';
+        src: url('../font/GothamMedium.ttf');
+    }
+
+    @font-face {
+        font-family: 'GothamLight';
+        src: url('../font/GothamLight.ttf');
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    label {
+        font-weight: 200;
+    }
+
+    #pageLogin {
+        width: 100vw;
+        height: 100vh;
+        background-color: #333333;
+        background-image: url(../static/fondLogin.png);
+        background-position: -200 -580;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container img {
+        padding-bottom: 20px;
+    }
+
+    #login {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .inputConnexion {
+        width: 350px;
+        height: 40px;
+        margin: 12px 0;
+        padding: 0 10px;
+        border: none;
+    }
+
+    .log {
+        width: 150px;
+        height: 38px;
+        margin: 35px auto 0 auto;
+        background-color: #333333;
+        color: white;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-family: Gotham;
+    }
+
+    #ou {
+        font-size: 12px;
+        font-weight: 200;
+        margin-top: 30px;
+        font-family: GothamLight;
+    }
+
+    #inscrire {
+        margin-top: 30px;
+        color: #333333;
+        cursor: pointer;
+        font-family: GothamLight;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block inner_head %}
+    {{ script|safe }}
+{% endblock %}
+
+{% block content %}
+
+
+<!-- NO NOT TOUCH this hidden field, it let me transfert data to javascript, and don't add |safe-->
+<input type="hidden" id="json_data_index_detail" value="{{ json_data }}">
+
+
+
+<div  id="flux_selector">
+</div>
+
+<div class ="container main_content">
+
+    <div class="row" style="padding-bottom: 10px;">
+
+        <div class="col-9">
+        <!-- Center area with graph -->
+        <!--div class="card bg-light mainmap_2rows"-->
+            <!--div class="card-header index_header">Plant map</div-->
+            <div class="card-body ">
+                <center>
+                    {{ div_temperature_in_map |safe }}
+                </center>
+            </div>
+            <div class="card-body">
+                <center>
+                    {{ div_debit_map |safe }}
+                </center>
+            </div>
+            <div class="card-body">
+                <center>
+                    {{ div_temperature_out_map |safe }}
+                </center>
+            </div>
+        <!--/div-->
+        </div>
+        <div class="col-3">
+        <!-- Help information area -->
+
+            <div class="card-header index_header">Details on this flux</div>
+            <div class="card-body index_body" id="flux_details">
+                <table id="table_details" class="stripped_table">
+                <thead>
+                <!--tr><th colspan="2">Details</th></tr-->
+                </thead>
+                <tbody>
+                <tr><td>Name: </td><td>{{ data_flux['name'][0] }}</td></tr>
+                <tr><td>Type: </td><td>{{ data_flux['hotcold'][0] }}</td></tr>
+                <tr><td>Media: </td><td>{{ data_flux['media'][0] }}</td></tr>
+                <tr><td>Class: </td><td>{{ data_flux['fclass'][0] }}</td></tr>
+                </tbody>
+                </table>
+                
+            </div>
+            <div class="button_bottom" style="">
+                <input type="button" value="Back" id="etape1_back_button" class="bottom_button btn btn-success btn-lg btn-block">
+            </div>
+        </div>
+    </div>
+
+</div>
+    
+{% endblock %}

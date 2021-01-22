@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block inner_head %}
+    {{ script|safe }}
+{% endblock %}
+
+{% block content %}
+
+<!-- NO NOT TOUCH this hidden field, it let me transfert data to javascript, and don't add |safe-->
+<!--<input type="hidden" id="json_data_index_index" value="{{ json_data }}"> -->
+
+<div class="container main_content">
+	<div class="row" style="padding-bottom: 10px;">
+		<div class="col-6">
+			<div class="row">
+				<div class="paramtitle col-8" id="selectCas">
+					Sélection du cas d'étude :
+				</div>
+				<div class="col-4">
+						
+				</div>
+			</div>
+			<center id="center">
+				<table class="table table-striped" id="fond_param">
+					<thead class="headTable">
+						<tr>
+							<th class="paramtitle">
+				
+							</th>
+							<th scope="col" class=" gauche">Nom</th>
+						</tr>
+					</thead>
+					<form>
+					{% for item in tl %}
+					<tr class="gris">
+						<td class="c4">
+							<div class="radio">
+								<input type="radio" id='regular' name="optradio">
+							</div>
+						</td>
+						<td scope="row" class="ID_SC" id="id_case" value={{item.id}} style="display: none;">{{item.id}}</td>
+						<td class="c2">
+							<div>
+								{{item.name}}
+							</div>
+						</td>
+						<!--td class="c4"><input type="button" class="solution_buton" data-goid="{{item.id}}" value="Detail"></td-->
+					</tr>
+					{% endfor %}
+					</form>
+				</table>
+				<div class="container-button_bottom" id="ctaNext">
+					<button type="button" class="button_bottom white_button btn btn-lg add-btn" id="index_add_study_but">
+						<i class="fas fa-plus" id="add_case_syb"></i>
+						<text id="add-case-btn-text">Créer un cas d'étude</text>
+					</button>
+					<button type="input" id="etape0_next_step_button" class="top_button btn btn-lg btn-success next-btn btn-block">
+						<text>Suivant</text>
+						<i class="fas fa-chevron-right next_button_right_syb"></i>
+				</button>
+				</div>
+			</center>
+		</div>
+		<div class="col-6">
+			<div class="card-header index_header paramtitle" id="apercu">
+				Aperçu
+			</div>
+			<div class="card-body index_body" style=" height: 100%; min-height:400px; max-height:400px;">
+				<BR>
+				{% for item in tl %}
+				<img src="{{item.path_to_map}}" class="imgPreview" id="prev{{item.id}}" style="display:none;"/>
+				{% endfor %}
+			</div>		
+		</div>
+	</div>
+	<!-- Modal section-->
+	<div class="modal-grey" id="modal_add_case">
+		<div class="model_content_new_case">
+			<div class="close">
+				<i class="fas fa-times"></i>
+			</div>
+			<h4>Création d'un cas d'étude</h4>
+            <form id="new_case_form">
+				<div id="nom_cas">Nom du cas d'étude :
+					<input type="text" placeholder="Cas d'étude" name="casename">
+				</div>
+				<div>Nom de l'entreprise :
+					<input type="text" placeholder="Entreprise" name="company_name">
+				</div id="nom_compagny">
+				<div class="submit-add-case-button">
+					<input id="submit_case" class="bottom_button btn btn-success btn-l" type="submit" value="Valider">
+				</div>
+			</form>
+
+		</div>
+
+	</div>
+</div>
+
+<script type="application/javascript">
+$(document).ready(function(){
+	index_page();
+	setTableEvent();
+});
+</script>
+    
+{% endblock %}

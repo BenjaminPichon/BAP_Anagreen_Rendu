@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <input type="hidden" id="json_data_history" value="{{json_data}}">
+    <input type="hidden" id="params_changed" value="{{params_changed}}">
+
+    <div id="modal_wait_load" class="modal_grey">
+        <div class="modal_content">
+            <h2>Waiting...</h2>
+            <div class="loader"></div>
+            <p>Loading in progress</p>
+        </div>
+    </div>
+    <div id="modal_history_preview" class="modal_grey">
+        <div class="modal_content_history_preview">
+            <button type="button" class="modal_close_button" title="Keyboard shortcut : Esc"><i class="fas fa-times"></i></button>
+            <div style="margin-bottom:1em;">
+				<h2 style="display:inline;">
+					Preview
+				</h2>
+			</div>
+            <center>
+                <table class="table table-striped" id="history_preview_table">
+                    <thead>
+                        <tr></tr>
+                            <tr><th scope="col">Rank</th>
+                            <th scope="col">Saved Energy</th>
+                            <th scope="col">CAPEX</th>
+                            <th scope="col">ROI</th>
+                            <th scope="col">CO2 Savings</th>
+                            <th scope="col">score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </center>
+        </div>
+    </div>
+    <div class="card bg-light params_1rows" id="fond_param">
+        <!--div class="card-header">
+            History
+        </div-->
+        <div class="container" id="results_container"  style="padding: 30px">
+            <center>
+                <table class="table table-striped" id="main_table">
+                    <thead>
+                        <tr></tr>
+                            <th scope="col" class="paramtitle">Id</th>
+                            <th scope="col" class="paramtitle">Date</th>
+                            <th scope="col" class="paramtitle">parameters_sig</th>
+                            <th scope="col" class="paramtitle">
+								Preview
+								<span class="info_logo" ><img src="/static/info.png" style="height:30px; padding-left:10px;"></span>		
+								<div id="help_flux" class="div_hover">
+									<div style="padding-right:10px;">
+										<p><strong>Add description</strong>
+											<ul>
+												<li>There is no description for the moment</li>
+												<li>Placeholder</li>
+												<li>Placeholder</li>
+												<li>Placeholder</li>
+											</ul>
+										</p>
+									</div>
+								</div>
+							</th>
+                            <th scope="col" class="paramtitle">Load 
+								<span class="info_logo" ><img src="/static/info.png" style="height:30px; padding-left:10px;"></span>		
+								<div id="help_flux" class="div_hover">
+									<div style="padding-right:10px;">
+										<p><strong>Load old parameters</strong>
+											<ul>
+												Used to Load parameters from previous simulations</li>
+											</ul>
+										</p>
+									</div>
+								</div>
+							</th>
+                        </tr>
+                    </thead>
+                    {% for item in tl %}
+                    <tr>
+                        <th scope="row">{{item.id}}</td>
+                        <td class="c2"><div class="result_digit">{{item.timestamp}}</div></td>
+                        <td class="c3" title="{{item.parameters_sig}}"><div  class="result_digit">{{item.parameters_sig_short}}</div></td>
+                        {% if item.solution_len!=0 %}
+                            <td class="c4"><input type="button" class="history_preview_button solution_buton" data-goid="{{item.id}}"  value="Preview"></td>
+                            <td class="c4"><input type="button" class="history_load_button solution_buton" data-goid="{{item.id}}"  value="Load"></td>
+                        {% else %}
+                            <td class="c4" colspan="2" style="text-align:center;">(error, no simulation result)</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </center>
+        </div>
+    </div>
+
+    <!-- Help information area -->
+    <div class="card bg-light righthelp_2rows" id="help_area" style="display:none;">
+        <div class="card-header">Help</div>
+        <div class="card-body" id="flux_details_help">
+            <p>Preview will display the 5 first solutions of the simulation. </p> 
+            <p>Load will erase current simulation and load all Flux setup, Parametrization and Result of the simulation.</p>
+            <p>parameters_sig is the unique signature of the simulation (hover to get full sha256 hash)</p>
+            <p><strong>infos</strong>
+				<ul>
+					<li>You can press "Esc" key to close preview popup</li>
+				</ul>
+            </p>
+        </div>
+    </div>
+    
+{% endblock %}

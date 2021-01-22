@@ -1,0 +1,167 @@
+#modal_wait_load {
+    text-align:center;
+}
+
+.modal_grey {
+    position:fixed;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    background-color:#efefef5e;
+    display:none;
+	z-index:1;
+}
+
+.modal_content {
+    position:fixed;
+    z-index:2;
+    top:50%;
+    left:50%;
+    margin-left:-200px;
+    width:400px;
+    margin-top:-100px;
+    height:200px;
+    background-color:#ffffff;
+    padding:5px;
+}
+
+.modal_content_history_preview {
+    position:fixed;
+    top:50%;
+    left:50%;
+    margin-left:-450px;
+    width:900px;
+    margin-top:-200px;
+    height:400px;
+    background-color:#ffffff;
+    padding:10px;
+}
+
+.loader {
+    border: 10px solid #f3f3f3; /* Light grey */
+    border-top: 10px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.modal_close_button {
+    background-color:#ffffff;
+    color:#000000;
+    background-image: none;
+    border:0;
+    
+    position:absolute;
+    top:5px;
+    right:5px;
+    border:0;
+}
+.modal_close_button:hover {
+    background-image: none;
+    border:0;
+    background-color:#ffcccc;
+}
+
+#results_container .table-striped th{
+	padding-top:.4em;
+	padding-bottom:.4em;
+}
+
+.table-striped tbody tr:hover {
+	background-color: #ECF7C5;
+}
+
+#results_container .table-striped thead{
+	line-height:1;
+}
+
+#results_container .table-striped tbody{
+	border-color: transparent;
+	line-height: 1.3em;
+}
+
+#main_table{
+	width: 90%;
+}
+
+#results_container{
+	max-width: 1680px;
+	padding: 0px!important;
+}
+
+#fond_param .table-striped td, 
+#fond_param .table-striped th,
+#fond_param .table-striped thead,
+#fond_param td,
+#fond_param th,
+#fond_param thead {
+	border: 0px solid transparent;
+}
+
+#fond_param, .details_box{
+	width: 100%!important;
+	border: 0px;
+}
+
+#fond_param, .params_1rows{
+	margin-top: 30px;
+	width: 100%!important;
+	border: 0px;
+}
+
+.righthelp_2rows {
+    grid-area: h;
+}
+
+#help_area,.main_content{
+	position:absolute;
+	top:365px;
+	max-width:100%!important;
+	padding-left:5%;
+	padding-right:5%;
+}
+
+.card-header{
+	font-weight:bold;
+}
+
+#flux_details_help {
+    max-height: 600px;
+	overflow-y: auto;
+}
+
+.div_hover {
+	position: absolute;
+	display:none;
+	background-color:white;
+	border: solid 1px black;
+	-moz-box-shadow: 0 0 10px black;
+	-webkit-box-shadow: 0 0 10px black;
+	box-shadow: 0 0 10px black;
+	z-index:400;
+	font-size:13pt;
+	font-weight:normal;
+	text-align:center;
+	padding-top:10px;
+}
+
+.div_hover ul {
+	padding-right:10px;
+}
+
+.info_logo:hover + .div_hover {
+	display: block;
+}
+/*checked logos that appear on the menu*/
+
+.paramtitle{
+	font-size:13pt!important;
+	font-family: Arial;
+}
